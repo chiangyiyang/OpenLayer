@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css"
+    type="text/css">
+  <style>
+    .map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+  <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+  <title>OpenLayers example</title>
+</head>
+
+<body>
+  <h2>My Map</h2>
+  <div id="map" class="map"></div>
+  <script type="text/javascript">
+
+
+    var rome = new ol.Feature({
+      geometry: new ol.geom.Point(ol.proj.fromLonLat([121.26, 24.87]))
+    });
+
+
+    rome.setStyle(new ol.style.Style({
+      image: new ol.style.Icon(/** @type {module:ol/style/Icon~Options} */({
+        color: '#8959A8',
+        crossOrigin: 'anonymous',
+        src: 'data/dot.png'
+      }))
+    }));
+
+    var vectorSource = new ol.source.Vector({
+        features: [rome]
+      });
+
+      var vectorLayer = new ol.layer.Vector({
+        source: vectorSource
+      });
+
+    var map = new ol.Map({
+      target: 'map',
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        }),
+        vectorLayer
+      ],
+      view: new ol.View({
+        center: ol.proj.fromLonLat([121.26, 24.87]),
+        zoom: 5
+      })
+    });
+  </script>
+</body>
+
+</html>
